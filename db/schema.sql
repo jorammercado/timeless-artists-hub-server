@@ -1,14 +1,14 @@
-DROP DATABASE IF EXISTS artists_dev;
-CREATE DATABASE artists_dev;
+DROP DATABASE IF EXISTS artistes_dev;
+CREATE DATABASE artistes_dev;
 
-\c artists_dev;
+\c artistes_dev;
 
 CREATE TABLE artistes (
  id SERIAL PRIMARY KEY,
  artiste_name VARCHAR(35) NOT NULL,
  birth_year INT DEFAULT 0,
  death_year INT DEFAULT 0,
- genre VARCHAR(35) DEFAULT 'genre unknown',
+ genre VARCHAR(50) DEFAULT 'genre unknown',
  nationality VARCHAR(35) DEFAULT 'nationality unknown',
  bio TEXT DEFAULT 'no bio provided',
  wikipedia_link TEXT DEFAULT 'https://www.wikipedia.org/',
