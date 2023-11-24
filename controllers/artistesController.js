@@ -2,7 +2,8 @@ const express = require("express")
 const artistes = express.Router()
 const {
     getAllArtistes,
-    getOneArtiste
+    getOneArtiste,
+    deleteArtiste
 } = require("../queries/artistes")
 const {
     checkArtistes,
@@ -48,7 +49,7 @@ artistes.get("/", checkArtistes, async (req, res) => {
                 req.query.order === "descNa" || req.query.order === "descBir")
                 res.json(allArtistes.reverse())
             else
-                res.send({ error: "Order query error in index path." })
+                res.json({ error: "Order query error in index path." })
         }
         else if (req.query.is_favorite) {
             if (req.query.is_favorite === "true") {
@@ -64,26 +65,40 @@ artistes.get("/", checkArtistes, async (req, res) => {
                 res.json(allArtistes)
             }
             else
-                res.send({ error: "Is favorite query error in index path." })
+                res.json({ error: "Is favorite query error in index path." })
         }
         else
             res.status(200).json(allArtistes)
     }
     catch (error) {
-        res.send({ error, type: "Error in index controller path." })
+        res.json({ error, typeInd: "Error in index controller path." })
     }
 })
 
 artistes.get("/:id", checkArtisteIndex, async (req, res) => {
-    try{
-    const { id } = req.params
-    const artiste = await getOneArtiste(id)
-    res.json(artiste)
+    try {
+        const { id } = req.params
+        const artiste = await getOneArtiste(id)
+        res.json(artiste)
     }
-    catch (error){
-        return {error, type:"Error in show controller path"}
+    catch (error) {
+        res.json({ error, typeGet: "Error in show controller path" })
     }
-  })
+})
+
+artistes.delete("/:id", checkArtisteIndex, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedArtiste = await deleteArtiste(id)
+        if (deletedArtiste)
+            res.status(200).json({ success: true, deletedArtiste })
+        else
+            res.status(404).json({ errorType: "Artiste not found." })
+
+    } catch (error) {
+        res.json({ error, typeDel: "Error in delete controller path" })
+    }
+})
 
 
 module.exports = artistes
