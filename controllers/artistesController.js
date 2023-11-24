@@ -3,11 +3,14 @@ const artistes = express.Router()
 const {
     getAllArtistes,
     getOneArtiste,
-    deleteArtiste
+    deleteArtiste,
+    createArtiste
 } = require("../queries/artistes")
 const {
     checkArtistes,
-    checkArtisteIndex
+    checkArtisteIndex,
+    checkArtisteName,
+    checkIsFavoriteBoolean
 } = require("../validations/checkArtistes")
 
 artistes.get("/", checkArtistes, async (req, res) => {
@@ -44,34 +47,34 @@ artistes.get("/", checkArtistes, async (req, res) => {
             })
             if (req.query.order === "asc" || req.query.order === "ascGen" ||
                 req.query.order === "ascNa" || req.query.order === "ascBir")
-                res.json(allArtistes)
+                res.status(200).json(allArtistes)
             else if (req.query.order === "desc" || req.query.order === "descGen" ||
                 req.query.order === "descNa" || req.query.order === "descBir")
-                res.json(allArtistes.reverse())
+                res.status(200).json(allArtistes.reverse())
             else
-                res.json({ error: "Order query error in index path." })
+                res.status(400).json({ error: "Order query error in index path." })
         }
         else if (req.query.is_favorite) {
             if (req.query.is_favorite === "true") {
                 allArtistes = allArtistes.filter(current => {
                     return current.is_favorite === true
                 })
-                res.json(allArtistes)
+                res.status(200).json(allArtistes)
             }
             else if (req.query.is_favorite === "false") {
                 allArtistes = allArtistes.filter(current => {
                     return current.is_favorite === false
                 })
-                res.json(allArtistes)
+                res.status(200).json(allArtistes)
             }
             else
-                res.json({ error: "Is favorite query error in index path." })
+                res.status(400).json({ error: "Is favorite query error in index path." })
         }
         else
             res.status(200).json(allArtistes)
     }
     catch (error) {
-        res.json({ error, typeInd: "Error in index controller path." })
+        res.status(400).json({ error, typeInd: "Error in index controller path." })
     }
 })
 
@@ -79,10 +82,10 @@ artistes.get("/:id", checkArtisteIndex, async (req, res) => {
     try {
         const { id } = req.params
         const artiste = await getOneArtiste(id)
-        res.json(artiste)
+        res.status(200).json(artiste)
     }
     catch (error) {
-        res.json({ error, typeGet: "Error in show controller path" })
+        res.status(400).json({ error, typeGet: "Error in show controller path" })
     }
 })
 
@@ -96,7 +99,25 @@ artistes.delete("/:id", checkArtisteIndex, async (req, res) => {
             res.status(404).json({ errorType: "Artiste not found." })
 
     } catch (error) {
-        res.json({ error, typeDel: "Error in delete controller path" })
+        res.status(400).json({ error, typeDel: "Error in delete controller path" })
+    }
+})
+
+artistes.post("/", checkArtisteName, checkIsFavoriteBoolean, async (req, res) => {
+    try {
+        const artiste = req.body;
+        artiste.birth_year = !artiste.birth_year ? 0 : artiste.birth_year
+        artiste.death_year = !artiste.death_year ? 0 : artiste.death_year
+        artiste.genre = !artiste.genre ? "genre unknown" : artiste.genre
+        artiste.nationality = !artiste.nationality ? "nationality unknown" : artiste.nationality
+        artiste.bio = !artiste.bio ? "no bio provided" : artiste.bio
+        artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/' : artiste.wikipedia_link
+        artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/' : artiste.youtube_link
+        artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
+        const artisteAdded = await createArtiste(artiste)
+        res.status(200).json(artisteAdded)
+    } catch (error) {
+        res.status(400).json({ error, typeNew: "Error in new controller path" })
     }
 })
 
