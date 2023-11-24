@@ -15,7 +15,10 @@ const {
     checkIsNumberBirth,
     checkIsNumberDeath,
     checkWikiLink,
-    checkYouTubeLink
+    checkYouTubeLink,
+    checkArtisteNameLength,
+    checkGenreLength,
+    checkNationalityLength
 } = require("../validations/checkArtistes")
 
 artistes.get("/", checkArtistes, async (req, res) => {
@@ -113,7 +116,10 @@ artistes.post("/", checkArtisteName,
     checkIsNumberBirth,
     checkIsNumberDeath,
     checkWikiLink,
-    checkYouTubeLink, async (req, res) => {
+    checkYouTubeLink,
+    checkArtisteNameLength,
+    checkGenreLength,
+    checkNationalityLength, async (req, res) => {
         try {
             const artiste = req.body;
             artiste.birth_year = !artiste.birth_year ? 0 : artiste.birth_year
@@ -121,7 +127,7 @@ artistes.post("/", checkArtisteName,
             artiste.genre = !artiste.genre ? "genre unknown" : artiste.genre
             artiste.nationality = !artiste.nationality ? "nationality unknown" : artiste.nationality
             artiste.bio = !artiste.bio ? "no bio provided" : artiste.bio
-            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/' : artiste.wikipedia_link
+            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/wiki/' : artiste.wikipedia_link
             artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/' : artiste.youtube_link
             artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
             const artisteAdded = await createArtiste(artiste)
@@ -138,7 +144,10 @@ artistes.put("/:id", checkArtisteName,
     checkIsNumberBirth,
     checkIsNumberDeath,
     checkWikiLink,
-    checkYouTubeLink, async (req, res) => {
+    checkYouTubeLink,
+    checkArtisteNameLength,
+    checkGenreLength,
+    checkNationalityLength, async (req, res) => {
         try {
             const { id } = req.params
             const artiste = req.body
