@@ -13,7 +13,9 @@ const {
     checkArtisteName,
     checkIsFavoriteBoolean,
     checkIsNumberBirth,
-    checkIsNumberDeath
+    checkIsNumberDeath,
+    checkWikiLink,
+    checkYouTubeLink
 } = require("../validations/checkArtistes")
 
 artistes.get("/", checkArtistes, async (req, res) => {
@@ -109,7 +111,9 @@ artistes.delete("/:id", checkArtisteIndex, async (req, res) => {
 artistes.post("/", checkArtisteName,
     checkIsFavoriteBoolean,
     checkIsNumberBirth,
-    checkIsNumberDeath, async (req, res) => {
+    checkIsNumberDeath,
+    checkWikiLink,
+    checkYouTubeLink, async (req, res) => {
         try {
             const artiste = req.body;
             artiste.birth_year = !artiste.birth_year ? 0 : artiste.birth_year
@@ -132,7 +136,9 @@ artistes.put("/:id", checkArtisteName,
     checkArtisteIndex,
     checkIsFavoriteBoolean,
     checkIsNumberBirth,
-    checkIsNumberDeath, async (req, res) => {
+    checkIsNumberDeath,
+    checkWikiLink,
+    checkYouTubeLink, async (req, res) => {
         try {
             const { id } = req.params
             const artiste = req.body
@@ -141,7 +147,7 @@ artistes.put("/:id", checkArtisteName,
             artiste.genre = !artiste.genre ? "genre unknown" : artiste.genre
             artiste.nationality = !artiste.nationality ? "nationality unknown" : artiste.nationality
             artiste.bio = !artiste.bio ? "no bio provided" : artiste.bio
-            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/' : artiste.wikipedia_link
+            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/wiki/' : artiste.wikipedia_link
             artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/' : artiste.youtube_link
             artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
             const updatedArtiste = await updateArtiste(id, artiste)

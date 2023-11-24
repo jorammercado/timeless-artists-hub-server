@@ -58,6 +58,21 @@ const checkIsNumberDeath = (req, res, next) => {
         res.status(400).json({ error: "death_year must be number type, death_year validation failed" })
 }
 
+const checkWikiLink = (req, res, next) => {
+    const { wikipedia_link } = req.body
+    if (wikipedia_link == undefined || /^http:\/\/en.wikipedia.org\/wiki\//.test(wikipedia_link) )
+        return next()
+    else
+        res.status(400).json({ error: "wikipedia link must start as http://en.wikipedia.org/wiki/, wikipedia_link validation failed" })
+}
+
+const checkYouTubeLink = (req, res, next) => {
+    const { youtube_link } = req.body
+    if (youtube_link == undefined || /^https:\/\/www.youtube.com\//.test(youtube_link))
+        return next()
+    else
+        res.status(400).json({ error: "youtube link must start as https://www.youtube.com/, youtube_link validation failed" })    
+}
 
 module.exports = {
     checkArtistes,
@@ -65,5 +80,7 @@ module.exports = {
     checkArtisteName,
     checkIsFavoriteBoolean,
     checkIsNumberBirth,
-    checkIsNumberDeath
+    checkIsNumberDeath,
+    checkWikiLink,
+    checkYouTubeLink
 }
