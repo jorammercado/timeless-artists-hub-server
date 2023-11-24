@@ -1,10 +1,12 @@
 const express = require("express")
 const artistes = express.Router()
 const {
-    getAllArtistes
+    getAllArtistes,
+    getOneArtiste
 } = require("../queries/artistes")
 const {
-    checkArtistes
+    checkArtistes,
+    checkArtisteIndex
 } = require("../validations/checkArtistes")
 
 artistes.get("/", checkArtistes, async (req, res) => {
@@ -71,6 +73,17 @@ artistes.get("/", checkArtistes, async (req, res) => {
         res.send({ error, type: "Error in index controller path." })
     }
 })
+
+artistes.get("/:id", checkArtisteIndex, async (req, res) => {
+    try{
+    const { id } = req.params
+    const artiste = await getOneArtiste(id)
+    res.json(artiste)
+    }
+    catch (error){
+        return {error, type:"Error in show controller path"}
+    }
+  })
 
 
 module.exports = artistes
