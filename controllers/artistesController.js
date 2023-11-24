@@ -4,7 +4,8 @@ const {
     getAllArtistes,
     getOneArtiste,
     deleteArtiste,
-    createArtiste
+    createArtiste,
+    updateArtiste
 } = require("../queries/artistes")
 const {
     checkArtistes,
@@ -116,8 +117,33 @@ artistes.post("/", checkArtisteName, checkIsFavoriteBoolean, async (req, res) =>
         artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
         const artisteAdded = await createArtiste(artiste)
         res.status(200).json(artisteAdded)
-    } catch (error) {
+    }
+    catch (error) {
         res.status(400).json({ error, typeNew: "Error in new controller path" })
+    }
+})
+
+artistes.put("/:id", checkArtisteName, checkArtisteIndex, checkIsFavoriteBoolean, async (req, res) => {
+    try {
+        const { id } = req.params
+        const artiste = req.body
+        artiste.birth_year = !artiste.birth_year ? 0 : artiste.birth_year
+        artiste.death_year = !artiste.death_year ? 0 : artiste.death_year
+        artiste.genre = !artiste.genre ? "genre unknown" : artiste.genre
+        artiste.nationality = !artiste.nationality ? "nationality unknown" : artiste.nationality
+        artiste.bio = !artiste.bio ? "no bio provided" : artiste.bio
+        artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/' : artiste.wikipedia_link
+        artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/' : artiste.youtube_link
+        artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
+        const updatedArtiste = await updateArtiste(id, artiste)
+        if (updatedArtiste.id) {
+            res.status(200).json(updatedArtiste)
+        } else {
+            res.status(400).json({ error: "Movie not found." })
+        }
+    }
+    catch (error) {
+        res.status(400).json({ error, typePut: "Error in update controller path" })
     }
 })
 

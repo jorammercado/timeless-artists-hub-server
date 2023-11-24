@@ -51,13 +51,28 @@ const createArtiste = async (artiste) => {
     }
 }
 
-
-
-
+const updateArtiste = async (id, artiste) => {
+    try {
+        const { artiste_name, birth_year, death_year, genre,
+            nationality, bio, wikipedia_link, youtube_link, is_favorite } = artiste
+        const updatedArtiste = await db.one(
+            `UPDATE artistes SET artiste_name=$1, birth_year=$2, death_year=$3,` +
+            ` genre=$4, nationality=$5, bio=$6, wikipedia_link=$7, youtube_link=$8,` +
+            ` is_favorite=$9 WHERE id=$10 RETURNING *`,
+            [artiste_name, birth_year, death_year, genre,
+                nationality, bio, wikipedia_link, youtube_link, is_favorite, id]
+        )
+        return updatedArtiste
+    }
+    catch (err) {
+        return { err, type: " sql query error - update an artiste" }
+    }
+}
 
 module.exports = {
     getAllArtistes,
     getOneArtiste,
     deleteArtiste,
-    createArtiste
+    createArtiste,
+    updateArtiste
 }
