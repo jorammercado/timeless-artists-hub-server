@@ -21,6 +21,9 @@ const {
     checkNationalityLength
 } = require("../validations/checkArtistes")
 
+const artworksController = require("./artworksController.js")
+artistes.use("/:artiste_id/artworks", artworksController)
+
 artistes.get("/", checkArtistes, async (req, res) => {
     try {
         const allArtistes = await getAllArtistes()

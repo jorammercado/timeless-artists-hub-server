@@ -25,7 +25,7 @@ const checkArtisteName = (req, res, next) => {
         return next()
     }
     else {
-        res.status(400).json({ error: "artiste_name is required, name validation failed" })
+        res.status(400).json({ error: "artist name is required, name validation failed" })
     }
 }
 
@@ -88,7 +88,7 @@ const checkArtisteNameLength = (req, res, next) => {
         res.status(400).json({
             error: `artist name length must be <= 35,` +
                 ` current length=${artiste_name.length},` +
-                ` artiste_name validation failed`
+                ` artist name length validation failed`
         })
 }
 
