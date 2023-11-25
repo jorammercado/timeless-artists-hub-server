@@ -3,7 +3,8 @@ const artworks = express.Router({ mergeParams: true })
 const { getOneArtiste } = require("../queries/artistes")
 
 const { getAllArtworks,
-    getOneArtwork
+    getOneArtwork,
+    deleteArtwork
 } = require("../queries/artworks")
 const { checkArtworks,
     checkArtisteIndex,
@@ -97,6 +98,21 @@ artworks.get("/:id", checkArtisteIndex, checkArtworkIndex, async (req, res) => {
     }
     catch (error) {
         res.status(400).json({ error, typeGet: "Error in show controller path for artworks" })
+    }
+})
+
+artworks.delete("/:id", checkArtisteIndex, checkArtworkIndex, async (req, res) => {
+    try {
+        const { id } = req.params
+        const deletedArtwork = await deleteArtwork(id)
+        if (deletedArtwork) {
+            res.status(200).json(deletedArtwork)
+        } else {
+            res.status(404).json({ errorType: "Artwork not found." })
+        }
+    }
+    catch (error) {
+        res.status(400).json({ error, typeDel: "Error in delete controller path for artworks" })
     }
 })
 
