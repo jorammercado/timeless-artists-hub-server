@@ -4,11 +4,17 @@ const { getOneArtiste } = require("../queries/artistes")
 
 const { getAllArtworks,
     getOneArtwork,
-    deleteArtwork
+    deleteArtwork,
+    createArtwork
 } = require("../queries/artworks")
 const { checkArtworks,
     checkArtisteIndex,
-    checkArtworkIndex
+    checkArtworkIndex,
+    checkArtworkName,
+    checkIsFavoriteBoolean,
+    checkStyleLength,
+    checkDateCreatedLength,
+    checkImageLinkFormat
 } = require("../validations/checkArtworks.js")
 
 
@@ -115,6 +121,30 @@ artworks.delete("/:id", checkArtisteIndex, checkArtworkIndex, async (req, res) =
         res.status(400).json({ error, typeDel: "Error in delete controller path for artworks" })
     }
 })
+
+artworks.post("/", checkArtisteIndex,
+    checkArtworkName,
+    checkIsFavoriteBoolean,
+    checkStyleLength,
+    checkDateCreatedLength,
+    checkImageLinkFormat, async (req, res) => {
+        try {
+            const { artiste_id } = req.params
+            const artiste = await getOneArtiste(artiste_id)
+            const artworkData = req.body
+            artworkData.artiste_name = !artworkData.artiste_name ? artiste.artiste_name : artworkData.artiste_name
+            artworkData.style = !artworkData.style ? "style unknown" : artworkData.style
+            artworkData.date_created = !artworkData.date_created ? "0 - unknown date created" : artworkData.date_created
+            artworkData.img_link = !artworkData.img_link ? "image link not available" : artworkData.img_link
+            artworkData.is_favorite = !artworkData.is_favorite ? false : artworkData.is_favorite
+            artworkData.artiste_id = artiste_id
+            const newArtwork = await createArtwork(artworkData)
+            res.status(200).json(newArtwork)
+        }
+        catch (error) {
+            res.status(400).json({ error, typeNew: "Error in new controller path for artworks" })
+        }
+    })
 
 
 module.exports = artworks

@@ -30,8 +30,26 @@ const deleteArtwork = async (id) => {
     }
 }
 
+const createArtwork = async (artwork) => {
+    try {
+        const { artwork_name, artiste_name, style, date_created,
+            img_link, isFavorite, artiste_id } = artwork
+        const newArtwork = await db.one(`INSERT INTO artworks(artwork_name, artiste_name,` +
+            ` style, date_created, img_link, is_favorite, artiste_id)` +
+            ` VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+            [artwork_name, artiste_name, style, date_created,
+                img_link, isFavorite, artiste_id]
+        )
+        return newArtwork
+    } catch (err) {
+        return { err, type: " sql query error - create an artwork" }
+    }
+}
+
+
 module.exports = {
     getAllArtworks,
     getOneArtwork,
-    deleteArtwork
+    deleteArtwork,
+    createArtwork
 }

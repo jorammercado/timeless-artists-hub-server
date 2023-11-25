@@ -19,7 +19,7 @@ CREATE TABLE artistes (
 CREATE TABLE artworks (
     id SERIAL PRIMARY KEY,
     artwork_name TEXT NOT NULL,
-    artiste_name VARCHAR(35) DEFAULT 'artist name unknown',
+    artiste_name VARCHAR(35) NOT NULL,
     style VARCHAR(35) DEFAULT 'style unknown',
     date_created VARCHAR(15) DEFAULT 'date created unknown' ,
     img_link TEXT DEFAULT 'image link unknown',
