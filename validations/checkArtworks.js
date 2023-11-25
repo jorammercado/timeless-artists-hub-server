@@ -22,6 +22,17 @@ const checkArtisteIndex = async (req, res, next) => {
         res.status(400).json({ error: "server error in checkArtisteIndex, id validation failed" })
 }
 
+const checkArtworkIndex = async (req, res, next) =>{
+    const { artiste_id, id } = req.params
+    const allArtworks = await getAllArtworks(artiste_id)
+    const ids = allArtworks.map(e => e.id)
+    if(ids.includes(Number(id)))
+        return next()
+    else
+        res.status(400).json({ error: "server error in checkArtworkIndex, id validation failed for artworks" })
+}
+
 module.exports = { checkArtworks,
-    checkArtisteIndex
+    checkArtisteIndex,
+    checkArtworkIndex
 }

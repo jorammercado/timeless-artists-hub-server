@@ -54,7 +54,12 @@ artistes.get("/", checkArtistes, async (req, res) => {
                         return 0
                 }
                 else if (req.query.order === "ascBir" || req.query.order === "descBir")
-                    return a.birth_year - b.birth_year
+                    if (a.birth_year < b.birth_year)
+                        return -1
+                    else if (a.birth_year > b.birth_year)
+                        return 1
+                    else
+                        return 0
             })
             if (req.query.order === "asc" || req.query.order === "ascGen" ||
                 req.query.order === "ascNa" || req.query.order === "ascBir")

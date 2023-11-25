@@ -2,10 +2,12 @@ const express = require("express")
 const artworks = express.Router({ mergeParams: true })
 const { getOneArtiste } = require("../queries/artistes")
 
-const { getAllArtworks
+const { getAllArtworks,
+    getOneArtwork
 } = require("../queries/artworks")
 const { checkArtworks,
-    checkArtisteIndex
+    checkArtisteIndex,
+    checkArtworkIndex
 } = require("../validations/checkArtworks.js")
 
 
@@ -43,7 +45,12 @@ artworks.get("/", checkArtworks, checkArtisteIndex, async (req, res) => {
                 else if (req.query.order === "ascDate" || req.query.order === "descDate") {
                     const aNumFirst = a.date_created.match(/(\d+)/)
                     const bNumFirst = b.date_created.match(/(\d+)/)
-                    return Number(aNumFirst) - Number(bNumFirst)
+                    if (aNumFirst < bNumFirst)
+                        return -1
+                    else if (aNumFirst > bNumFirst)
+                        return 1
+                    else
+                        return 0
                 }
             })
             if (req.query.order === "asc" || req.query.order === "ascArtiste" ||
@@ -82,7 +89,16 @@ artworks.get("/", checkArtworks, checkArtisteIndex, async (req, res) => {
     }
 })
 
-
+artworks.get("/:id", checkArtisteIndex, checkArtworkIndex, async (req, res) => {
+    try {
+        const { artiste_id, id } = req.params
+        const artwork = await getOneArtwork(id)
+        res.status(200).json(artwork)
+    }
+    catch (error) {
+        res.status(400).json({ error, typeGet: "Error in show controller path for artworks" })
+    }
+})
 
 
 module.exports = artworks

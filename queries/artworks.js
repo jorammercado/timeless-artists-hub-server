@@ -11,6 +11,17 @@ const getAllArtworks = async (artiste_id) => {
     }
 }
 
+const getOneArtwork = async (id) => {
+    try{
+        const oneArtwork = await db.any("SELECT * FROM artworks WHERE id=$1",id)
+        return oneArtwork
+    }
+    catch (err) {
+        return { err, type: " sql query error - get one artwork" }
+    }
+}
+
 module.exports = {
-    getAllArtworks
+    getAllArtworks,
+    getOneArtwork
 }
