@@ -144,7 +144,8 @@ artistes.post("/", checkArtisteName,
         catch (error) {
             res.status(400).json({ error, typeNew: "Error in new controller path" })
         }
-    })
+    }
+)
 
 artistes.put("/:id", checkArtisteName,
     checkArtisteIndex,
@@ -177,7 +178,8 @@ artistes.put("/:id", checkArtisteName,
         catch (error) {
             res.status(400).json({ error, typePut: "Error in update controller path" })
         }
-    })
+    }
+)
 
 
 module.exports = artistes

@@ -5,7 +5,8 @@ const { getOneArtiste } = require("../queries/artistes")
 const { getAllArtworks,
     getOneArtwork,
     deleteArtwork,
-    createArtwork
+    createArtwork,
+    updateArtwork
 } = require("../queries/artworks")
 const { checkArtworks,
     checkArtisteIndex,
@@ -132,7 +133,8 @@ artworks.post("/", checkArtisteIndex,
             const { artiste_id } = req.params
             const artiste = await getOneArtiste(artiste_id)
             const artworkData = req.body
-            artworkData.artiste_name = !artworkData.artiste_name ? artiste.artiste_name : artworkData.artiste_name
+            // artworkData.artiste_name = !artworkData.artiste_name ? artiste.artiste_name : artworkData.artiste_name
+            artworkData.artiste_name = artiste.artiste_name
             artworkData.style = !artworkData.style ? "style unknown" : artworkData.style
             artworkData.date_created = !artworkData.date_created ? "0 - unknown date created" : artworkData.date_created
             artworkData.img_link = !artworkData.img_link ? "image link not available" : artworkData.img_link
@@ -144,7 +146,34 @@ artworks.post("/", checkArtisteIndex,
         catch (error) {
             res.status(400).json({ error, typeNew: "Error in new controller path for artworks" })
         }
-    })
+    }
+)
+
+artworks.put("/:id", checkArtisteIndex,
+    checkArtworkName,
+    checkIsFavoriteBoolean,
+    checkStyleLength,
+    checkDateCreatedLength,
+    checkImageLinkFormat,
+    checkArtworkIndex, async (req, res) => {
+        try {
+            const { id, artiste_id } = req.params
+            // const artiste = await getOneArtiste(artiste_id)
+            const updatedArtworkData = req.body
+            // updatedArtworkData.artiste_name = !updatedArtworkData.artiste_name ? artiste.artiste_name : updatedArtworkData.artiste_name
+            updatedArtworkData.style = !updatedArtworkData.style ? "style unknown" : updatedArtworkData.style
+            updatedArtworkData.date_created = !updatedArtworkData.date_created ? "0 - unknown date created" : updatedArtworkData.date_created
+            updatedArtworkData.img_link = !updatedArtworkData.img_link ? "image link not available" : updatedArtworkData.img_link
+            updatedArtworkData.is_favorite = !updatedArtworkData.is_favorite ? false : updatedArtworkData.is_favorite
+            // updatedArtworkData.artiste_id = artiste_id
+            const updatedArtwork = await updateArtwork(id, updatedArtworkData)
+            res.status(200).json(updatedArtwork)
+        }
+        catch (error) {
+            res.status(400).json({ error, typePut: "Error in update controller path for artworks" })
+        }
+    }
+)
 
 
 module.exports = artworks
