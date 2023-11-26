@@ -29,9 +29,23 @@ const deleteArtworkDirect = async (id) => {
     }
 }
 
+const updateArtworkDirect = async (id, artwork) => {
+    try {
+        const { artwork_name, style, date_created,
+            img_link, is_favorite } = artwork
+        const updatedArtwork = await db.one(`UPDATE artworks SET artwork_name=$1,` +
+            ` style=$2, date_created=$3, img_link=$4, is_favorite=$5 WHERE id=$6 RETURNING *`,
+            [artwork_name, style, date_created, img_link, is_favorite, id]
+        );
+        return updatedArtwork
+    } catch (err) {
+        return { err, type: " sql query error - updated an artwork - direct" }
+    }
+}
 
 module.exports = {
     getAllArtworksDirect,
     getOneArtworkDirect,
-    deleteArtworkDirect
+    deleteArtworkDirect,
+    updateArtworkDirect
 }
