@@ -11,8 +11,8 @@ app.get("/", (req, res) => {
 
 const artistesController = require("./controllers/artistesController.js")
 app.use("/artistes", artistesController)
-// const artworksDirectController = require("./controllers/artworksController.js")
-// app.use("/artworks", artworksDirectController)
+const artworksDirectController = require("./controllers/artworksDirectController.js")
+app.use("/artworks", artworksDirectController)
 
 app.get("*", (req, res) => {
     res.status(404).send("Page not found")
