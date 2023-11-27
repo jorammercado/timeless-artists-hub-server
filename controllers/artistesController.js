@@ -72,16 +72,14 @@ artistes.get("/", checkArtistes, async (req, res) => {
         }
         else if (req.query.is_favorite) {
             if (req.query.is_favorite === "true") {
-                allArtistes = allArtistes.filter(current => {
+                res.status(200).json(allArtistes.filter(current => { 
                     return current.is_favorite === true
-                })
-                res.status(200).json(allArtistes)
+                }))
             }
             else if (req.query.is_favorite === "false") {
-                allArtistes = allArtistes.filter(current => {
+                res.status(200).json(allArtistes.filter(current => { 
                     return current.is_favorite === false
-                })
-                res.status(200).json(allArtistes)
+                }))
             }
             else
                 res.status(400).json({ error: "Is favorite query error in index path." })

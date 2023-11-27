@@ -85,16 +85,14 @@ artworksDirect.get("/", checkArtworksDirect, async (req, res) => {
         }
         else if (req.query.is_favorite) {
             if (req.query.is_favorite === "true") {
-                allArtworks = allArtworks.filter(current => {
+                res.status(200).json(allArtworks.filter(current => { 
                     return current.is_favorite === true
-                })
-                res.status(200).json(allArtworks)
+                }))
             }
             else if (req.query.is_favorite === "false") {
-                allArtworks = allArtworks.filter(current => {
+                res.status(200).json(allArtworks.filter(current => { 
                     return current.is_favorite === false
-                })
-                res.status(200).json(allArtworks)
+                }))
             }
             else
                 res.status(400).json({
