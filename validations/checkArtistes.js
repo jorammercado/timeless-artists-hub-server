@@ -65,7 +65,7 @@ const checkWikiLink = (req, res, next) => {
         return next()
     else
         res.status(400).json({
-            error: `wikipedia link must start as http://en.wikipedia.org/wiki/,` +
+            error: `wikipedia link must start as http(s)://en.wikipedia.org/wiki/,` +
                 ` wikipedia_link validation failed, input=${wikipedia_link}`
         })
 }
