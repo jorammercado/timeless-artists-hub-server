@@ -133,8 +133,8 @@ artistes.post("/", checkArtisteName,
             artiste.genre = !artiste.genre ? "genre unknown" : artiste.genre
             artiste.nationality = !artiste.nationality ? "nationality unknown" : artiste.nationality
             artiste.bio = !artiste.bio ? "no bio provided" : artiste.bio
-            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/wiki/' : artiste.wikipedia_link
-            artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/' : artiste.youtube_link
+            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://en.wikipedia.org/wiki/' : artiste.wikipedia_link
+            artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/embed/' : artiste.youtube_link
             artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
             const artisteAdded = await createArtiste(artiste)
             res.status(200).json(artisteAdded)
@@ -163,8 +163,8 @@ artistes.put("/:id", checkArtisteName,
             artiste.genre = !artiste.genre ? "genre unknown" : artiste.genre
             artiste.nationality = !artiste.nationality ? "nationality unknown" : artiste.nationality
             artiste.bio = !artiste.bio ? "no bio provided" : artiste.bio
-            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://www.wikipedia.org/wiki/' : artiste.wikipedia_link
-            artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/' : artiste.youtube_link
+            artiste.wikipedia_link = !artiste.wikipedia_link ? 'https://en.wikipedia.org/wiki/' : artiste.wikipedia_link
+            artiste.youtube_link = !artiste.youtube_link ? 'https://www.youtube.com/embed/' : artiste.youtube_link
             artiste.is_favorite = !artiste.is_favorite ? false : artiste.is_favorite
             const updatedArtiste = await updateArtiste(id, artiste)
             if (updatedArtiste.id) {

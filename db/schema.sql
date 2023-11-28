@@ -11,8 +11,8 @@ CREATE TABLE artistes (
  genre VARCHAR(50) DEFAULT 'genre unknown',
  nationality VARCHAR(35) DEFAULT 'nationality unknown',
  bio TEXT DEFAULT 'no bio provided',
- wikipedia_link TEXT DEFAULT 'https://www.wikipedia.org/',
- youtube_link TEXT DEFAULT 'https://www.youtube.com/',
+ wikipedia_link TEXT DEFAULT 'https://en.wikipedia.org/',
+ youtube_link TEXT DEFAULT 'https://www.youtube.com/embed/',
  is_favorite BOOLEAN DEFAULT false
 );
 
