@@ -106,7 +106,7 @@ artworksDirect.get("/", checkArtworksDirect, async (req, res) => {
     }
     catch (error) {
         res.status(400).json({
-            error, typeInd: `Error in index` +
+            error: `${error}, error in index` +
                 ` controller path for artworks Direct.`
         })
     }
@@ -120,7 +120,7 @@ artworksDirect.get("/:id", checkArtworkIndexDirect, async (req, res) => {
     }
     catch (error) {
         res.status(400).json({
-            error, typeGet: `Error in show` +
+            error: `${error}, error in show` +
                 ` controller path for artworks Direct`
         })
     }
@@ -133,12 +133,12 @@ artworksDirect.delete("/:id", checkArtworkIndexDirect, async (req, res) => {
         if (deletedArtwork) {
             res.status(200).json(deletedArtwork)
         } else {
-            res.status(404).json({ errorType: "Artwork not found." })
+            res.status(404).json({ error: "Artwork not found." })
         }
     }
     catch (error) {
         res.status(400).json({
-            error, typeDel: `Error in delete` +
+            error: `${error}, error in delete` +
                 ` controller path for artworks Direct`
         })
     }
@@ -167,7 +167,7 @@ artworksDirect.put("/:id",
         }
         catch (error) {
             res.status(400).json({
-                error, typePut: `Error in update controller` +
+                error: `${error}, error in update controller` +
                     ` path for artworks - direct`
             })
         }

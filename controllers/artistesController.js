@@ -68,7 +68,7 @@ artistes.get("/", checkArtistes, async (req, res) => {
                 req.query.order === "descNa" || req.query.order === "descBir")
                 res.status(200).json(allArtistes.reverse())
             else
-                res.status(400).json({ error: "Order query error in index path." })
+                res.status(400).json({ error: `Order query error in index path.` })
         }
         else if (req.query.is_favorite) {
             if (req.query.is_favorite === "true") {
@@ -82,13 +82,13 @@ artistes.get("/", checkArtistes, async (req, res) => {
                 }))
             }
             else
-                res.status(400).json({ error: "Is favorite query error in index path." })
+                res.status(400).json({ error: `Is favorite query error in index path.` })
         }
         else
             res.status(200).json(allArtistes)
     }
     catch (error) {
-        res.status(400).json({ error, typeInd: "Error in index controller path." })
+        res.status(400).json({ error: `${error}, error in index controller path.` })
     }
 })
 
@@ -99,7 +99,7 @@ artistes.get("/:id", checkArtisteIndex, async (req, res) => {
         res.status(200).json(artiste)
     }
     catch (error) {
-        res.status(400).json({ error, typeGet: "Error in show controller path" })
+        res.status(400).json({ error: `${error}, error in show controller path` })
     }
 })
 
@@ -110,10 +110,10 @@ artistes.delete("/:id", checkArtisteIndex, async (req, res) => {
         if (deletedArtiste)
             res.status(200).json({ success: true, deletedArtiste })
         else
-            res.status(404).json({ errorType: "Artiste not found." })
+            res.status(404).json({ error: `Artiste not found.` })
 
     } catch (error) {
-        res.status(400).json({ error, typeDel: "Error in delete controller path" })
+        res.status(400).json({ error: `${error}, error in delete controller path` })
     }
 })
 
@@ -140,7 +140,7 @@ artistes.post("/", checkArtisteName,
             res.status(200).json(artisteAdded)
         }
         catch (error) {
-            res.status(400).json({ error, typeNew: "Error in new controller path" })
+            res.status(400).json({ error: `${error},  error in new controller path` })
         }
     }
 )
@@ -170,11 +170,11 @@ artistes.put("/:id", checkArtisteName,
             if (updatedArtiste.id) {
                 res.status(200).json(updatedArtiste)
             } else {
-                res.status(400).json({ error: "Movie not found." })
+                res.status(400).json({ error: `Movie not found.` })
             }
         }
         catch (error) {
-            res.status(400).json({ error, typePut: "Error in update controller path" })
+            res.status(400).json({ error: `${error}, error in update controller path` })
         }
     }
 )
