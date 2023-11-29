@@ -159,7 +159,7 @@ artworksDirect.put("/:id",
             updatedArtworkData.date_created = !updatedArtworkData.date_created ?
                 "0 - unknown date created" : updatedArtworkData.date_created
             updatedArtworkData.img_link = !updatedArtworkData.img_link ?
-                "image link not available" : updatedArtworkData.img_link
+                "" : updatedArtworkData.img_link
             updatedArtworkData.is_favorite = !updatedArtworkData.is_favorite ?
                 false : updatedArtworkData.is_favorite
             const updatedArtwork = await updateArtworkDirect(id, updatedArtworkData)

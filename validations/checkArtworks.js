@@ -10,7 +10,7 @@ const checkArtworks = async (req, res, next) => {
     else {
         res.status(500).json({
             error: `server error in getAllArtworks,` +
-                ` list validation failed`
+                ` list validation failed, no artworks`
         })
     }
 }

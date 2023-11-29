@@ -8,7 +8,7 @@ const checkArtworksDirect = async (req, res, next) => {
     else {
         res.status(500).json({
             error: `server error in getAllArtworksDirect,` +
-                ` list validation failed`
+                ` list validation failed, no artworks`
         })
     }
 }

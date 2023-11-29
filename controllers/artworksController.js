@@ -87,12 +87,12 @@ artworks.get("/", checkArtworks, checkArtisteIndex, async (req, res) => {
         }
         else if (req.query.is_favorite) {
             if (req.query.is_favorite === "true") {
-                res.status(200).json(allArtworks.filter(current => { 
+                res.status(200).json(allArtworks.filter(current => {
                     return current.is_favorite === true
                 }))
             }
             else if (req.query.is_favorite === "false") {
-                res.status(200).json(allArtworks.filter(current => { 
+                res.status(200).json(allArtworks.filter(current => {
                     return current.is_favorite === false
                 }))
             }
@@ -162,7 +162,7 @@ artworks.post("/", checkArtisteIndex,
             artworkData.date_created = !artworkData.date_created ?
                 "unknown date" : artworkData.date_created
             artworkData.img_link = !artworkData.img_link ?
-                "image link not available" : artworkData.img_link
+                "" : artworkData.img_link
             artworkData.is_favorite = typeof artworkData.is_favorite !== 'boolean' ?
                 false : artworkData.is_favorite
             artworkData.artiste_id = artiste_id
@@ -193,7 +193,7 @@ artworks.put("/:id", checkArtisteIndex,
             updatedArtworkData.date_created = !updatedArtworkData.date_created ?
                 "unknown date" : updatedArtworkData.date_created
             updatedArtworkData.img_link = !updatedArtworkData.img_link ?
-                "image link not available" : updatedArtworkData.img_link
+                "" : updatedArtworkData.img_link
             updatedArtworkData.is_favorite = typeof updatedArtworkData.is_favorite !== 'boolean' ?
                 false : updatedArtworkData.is_favorite
             const updatedArtwork = await updateArtwork(id, updatedArtworkData)
