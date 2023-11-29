@@ -40,10 +40,10 @@ const checkArtworkNameDirect = (req, res, next) => {
 
 const checkIsFavoriteBooleanDirect = (req, res, next) => {
     const { is_favorite } = req.body
-    if (is_favorite == "true" ||
-        is_favorite == "false" ||
-        is_favorite == undefined ||
-        typeof is_favorite == "boolean")
+    if (is_favorite === "true" ||
+        is_favorite === "false" ||
+        is_favorite === undefined ||
+        typeof is_favorite === "boolean")
         return next()
     else
         res.status(400).json({
@@ -54,7 +54,7 @@ const checkIsFavoriteBooleanDirect = (req, res, next) => {
 
 const checkStyleLengthDirect = (req, res, next) => {
     const { style } = req.body
-    if (style == undefined || style.length <= 35)
+    if (style === undefined || style.length <= 35)
         return next()
     else
         res.status(400).json({
@@ -66,7 +66,7 @@ const checkStyleLengthDirect = (req, res, next) => {
 
 const checkDateCreatedLengthDirect = (req, res, next) => {
     const { date_created } = req.body
-    if (date_created == undefined || date_created.length <= 35)
+    if (date_created === undefined || date_created.length <= 35)
         return next()
     else
         res.status(400).json({
@@ -78,7 +78,8 @@ const checkDateCreatedLengthDirect = (req, res, next) => {
 
 const checkImageLinkFormatDirect = (req, res, next) => {
     const { img_link } = req.body
-    if (img_link == undefined || /^https:\/\/|^http:\/\//.test(img_link))
+    if (img_link === undefined || /^https:\/\/|^http:\/\//.test(img_link) ||
+        img_link === "")
         return next()
     else
         res.status(400).json({

@@ -160,10 +160,10 @@ artworks.post("/", checkArtisteIndex,
             artworkData.style = !artworkData.style ?
                 "style unknown" : artworkData.style
             artworkData.date_created = !artworkData.date_created ?
-                "0 - unknown date created" : artworkData.date_created
+                "unknown date" : artworkData.date_created
             artworkData.img_link = !artworkData.img_link ?
                 "image link not available" : artworkData.img_link
-            artworkData.is_favorite = !artworkData.is_favorite ?
+            artworkData.is_favorite = typeof artworkData.is_favorite !== 'boolean' ?
                 false : artworkData.is_favorite
             artworkData.artiste_id = artiste_id
             const newArtwork = await createArtwork(artworkData)
@@ -191,10 +191,10 @@ artworks.put("/:id", checkArtisteIndex,
             updatedArtworkData.style = !updatedArtworkData.style ?
                 "style unknown" : updatedArtworkData.style
             updatedArtworkData.date_created = !updatedArtworkData.date_created ?
-                "0 - unknown date created" : updatedArtworkData.date_created
+                "unknown date" : updatedArtworkData.date_created
             updatedArtworkData.img_link = !updatedArtworkData.img_link ?
                 "image link not available" : updatedArtworkData.img_link
-            updatedArtworkData.is_favorite = !updatedArtworkData.is_favorite ?
+            updatedArtworkData.is_favorite = typeof updatedArtworkData.is_favorite !== 'boolean' ?
                 false : updatedArtworkData.is_favorite
             const updatedArtwork = await updateArtwork(id, updatedArtworkData)
             res.status(200).json(updatedArtwork)

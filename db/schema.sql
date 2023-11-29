@@ -21,7 +21,7 @@ CREATE TABLE artworks (
     artwork_name TEXT NOT NULL,
     artiste_name VARCHAR(35) NOT NULL,
     style VARCHAR(35) DEFAULT 'style unknown',
-    date_created VARCHAR(15) DEFAULT 'date created unknown' ,
+    date_created VARCHAR(15) DEFAULT 'date unknown',
     img_link TEXT DEFAULT 'image link unknown',
     is_favorite BOOLEAN DEFAULT false,
     artiste_id INTEGER REFERENCES artistes (id)

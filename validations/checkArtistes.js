@@ -72,8 +72,8 @@ const checkWikiLink = (req, res, next) => {
 
 const checkYouTubeLink = (req, res, next) => {
     const { youtube_link } = req.body
-    if ( /^https:\/\/www.youtube.com\/embed\/|^http:\/\/www.youtube.com\/embed\//.test(youtube_link) ||
-        youtube_link === null || youtube_link === "" || youtube_link === undefined )
+    if (/^https:\/\/www.youtube.com\/embed\/|^http:\/\/www.youtube.com\/embed\//.test(youtube_link) ||
+        youtube_link === null || youtube_link === "" || youtube_link === undefined)
         return next()
     else
         res.status(400).json({
