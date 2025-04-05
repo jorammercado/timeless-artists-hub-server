@@ -79,7 +79,7 @@ CREATE TABLE artworks (
 Below is a simplified ERD showing the one-to-many relationship between artists and artworks:
 
 <p align="center">
-  <img src="./erd.png" height="250px" alt="ERD">
+  <img src="./erd.png" height="325px" alt="ERD">
 </p>
 
 - **One artist** can have **many artworks**
