@@ -2,51 +2,52 @@
 
 ## Project Overview
 
-This repository contains the backend server for the **Timeless Artists Hub** project. It provides API endpoints for managing artists and their artworks in a PostgreSQL database, including full CRUD functionality and proper relational linking between resources.
+This repository contains the backend server for the **Timeless Artists Hub** project. It provides a RESTful API for managing a curated catalog of visual artists and their artworks using a relational PostgreSQL database. The server powers the frontend interface by handling requests, delivering filtered and paginated data, and managing database persistence.
 
-The server supports the frontend by delivering paginated and filtered data, handling user requests, and managing database persistence. Artworks are associated with artists via foreign key relationships, and cascading deletes ensure referential integrity.
+Artworks are linked to artists through a one-to-many foreign key relationship, and the system uses cascading deletes to ensure clean data handling. The server also comes with setup and seeding scripts for fast deployment and development.
 
 ## Tech Stack
 
-- **Framework**: Node.js, Express
-- **Database**: PostgreSQL
-- **Deployment**: Render
+* **Runtime**: Node.js
+* **Framework**: Express
+* **Database**: PostgreSQL
+* **Deployment**: Render
 
 ## Features
 
-- **RESTful API**: Provides clean and consistent endpoints for managing artist and artwork resources.
-- **Full CRUD Support**: Includes create, read, update, and delete operations for both artists and artworks.
-- **Relational Data Structure**: Implements a one-to-many relationship between artists and their artworks using foreign keys.
-- **Cascading Deletes**: Automatically removes associated artworks when an artist is deleted, preserving database integrity.
-- **Pre-Seeded Data**: Loads a curated collection of artwork metadata and artist bios.
-- **Database Setup Scripts**: Includes SQL scripts for schema creation and data seeding to streamline development and deployment.
+* **RESTful Routing**: Consistent endpoints for managing artists and artworks.
+* **Full CRUD Support**: Create, read, update, and delete operations for both resource types.
+* **Relational Data Model**: PostgreSQL schema enforces one-to-many relationship via foreign keys.
+* **Cascading Deletes**: When an artist is deleted, all their artworks are automatically removed.
+* **Pre-Seeded Data**: Database comes preloaded with a curated list of artists and their artwork metadata.
+* **Setup Scripts**: Includes SQL scripts for schema creation and database seeding.
 
 ## Contents
 
-- [Deployed Application](#deployed-application)
-- [GitHub Repositories](#github-repositories)
-- [Database Schema](#database-schema)
-- [Installation and Setup](#installation-and-setup)
-- [License](#license)
-- [Contact](#contact)
+* [Deployed Application](#deployed-application)
+* [GitHub Repositories](#github-repositories)
+* [Database Schema](#database-schema)
+* [Installation and Setup](#installation-and-setup)
+* [License](#license)
+* [Contact](#contact)
 
 ## Deployed Application
 
-- **Frontend App on Netlify**: [https://artistshub.netlify.app](https://artistshub.netlify.app)
-- **Backend Server on Render**: [https://timeless-artists-hub-server.onrender.com](https://timeless-artists-hub-server.onrender.com)
+* **Frontend**: [https://artistshub.netlify.app](https://artistshub.netlify.app)
+* **Backend**: [https://timeless-artists-hub-server.onrender.com](https://timeless-artists-hub-server.onrender.com)
 
 ## GitHub Repositories
 
-- [Frontend Repository](https://github.com/jorammercado/timeless-artists-hub)
-- [Backend Repository](https://github.com/jorammercado/timeless-artists-hub-server)
-- [SQL Data Helper (json-to-sql)](https://github.com/jorammercado/timeless-artists-hub-sql-seed)
+* [Frontend Repository](https://github.com/jorammercado/timeless-artists-hub)
+* [Backend Repository](https://github.com/jorammercado/timeless-artists-hub-server)
+* [SQL Seeder Utility](https://github.com/jorammercado/timeless-artists-hub-sql-seed)
 
 ## Database Schema
 
-The application uses a simple relational schema with two core tables:
+Two core tables are used:
 
-- **artistes**: Stores artist information including name, biographical details, and optional links.
-- **artworks**: Stores artwork entries associated with each artist, using a foreign key constraint and cascading deletes.
+* **artistes**: Stores artist data including name, nationality, birth/death years, genre, bios, and media links.
+* **artworks**: Stores artwork data tied to artists, including style, title, image, and creation date.
 
 ```sql
 CREATE TABLE artistes (
@@ -76,14 +77,12 @@ CREATE TABLE artworks (
 
 ### Entity Relationship Diagram (ERD)
 
-Below is a simplified ERD showing the one-to-many relationship between artists and artworks:
-
 <p align="center">
   <img src="./erd.png" height="200px" alt="ERD">
 </p>
 
-- **One artist** can have **many artworks**
-- Each **artwork** belongs to **one artist**
+* **One artist** can have **many artworks**
+* Each **artwork** belongs to **one artist**
 
 ## Installation and Setup
 
@@ -100,9 +99,7 @@ Below is a simplified ERD showing the one-to-many relationship between artists a
    npm install
    ```
 
-3. **Configure environment variables:**
-
-   Create a `.env` file in the root directory with the following values:
+3. **Create a `.env` file:**
 
    ```env
    PORT=5001
@@ -112,8 +109,7 @@ Below is a simplified ERD showing the one-to-many relationship between artists a
    PG_USER=postgres
    ```
 
-   > Ensure PostgreSQL is installed and running locally with the specified credentials.
-   > The default user provided must have permission to access and modify the local database.
+   > Ensure PostgreSQL is running and accessible with the provided credentials.
 
 4. **Initialize and seed the database:**
 
@@ -122,7 +118,7 @@ Below is a simplified ERD showing the one-to-many relationship between artists a
    npm run dbseed
    ```
 
-5. **Start the server:**
+5. **Start the development server:**
 
    ```bash
    npm start
@@ -130,10 +126,11 @@ Below is a simplified ERD showing the one-to-many relationship between artists a
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://opensource.org/license/mit) for more information.
+This project is licensed under the [MIT License](https://opensource.org/license/mit).
 
 ## Contact
 
 For questions or feedback:
 
-- Joram Mercado — [GitHub](https://github.com/jorammercado) | [LinkedIn](https://www.linkedin.com/in/jorammercado)
+* **Joram Mercado**
+  [GitHub](https://github.com/jorammercado) • [LinkedIn](https://www.linkedin.com/in/jorammercado)
